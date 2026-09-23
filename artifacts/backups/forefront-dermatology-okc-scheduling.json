@@ -1,0 +1,34 @@
+{
+  "id": "JR9kCrqtmb1fJfDFswYP3n",
+  "title": "Forefront Dermatology â€” OKC Scheduling",
+  "description": "Staff scheduling application for Forefront Dermatology's North & South clinics in Oklahoma City",
+  "type": "interactive-app",
+  "created": "2026-09-22T00:00:00Z",
+  "lastModified": "2026-09-22T00:00:00Z",
+  "url": "https://claude.ai/artifact/JR9kCrqtmb1fJfDFswYP3n",
+  "backupDate": "2026-09-22T00:00:00Z",
+  "tags": ["scheduling", "dermatology", "staff-management", "medical"],
+  "metadata": {
+    "technology": "Vanilla JavaScript + Claude Artifacts Database",
+    "responsive": true,
+    "darkMode": true,
+    "purpose": "Manage physician, PA, and Mohs surgeon schedules with medical assistant staffing",
+    "locations": ["North Clinic", "South Clinic"],
+    "roles": ["Physician", "Physician Assistant", "Mohs Surgeon"],
+    "features": [
+      "Provider roster management",
+      "Weekly schedule templates",
+      "Medical assistant pool",
+      "Auto-assignment algorithm",
+      "Time off tracking",
+      "Year calendar overview",
+      "Mobile responsive"
+    ]
+  },
+  "stats": {
+    "estimatedSize": "52.4 KB",
+    "lines": 959,
+    "complexity": "High",
+    "dataStorage": "Claude Artifacts Database with local storage fallback"
+  }
+}
