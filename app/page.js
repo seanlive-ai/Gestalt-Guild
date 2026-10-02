@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '../lib/supabaseClient';
 
+// Force redeploy
+
 function formatWhen(startIso, endIso) {
   const start = new Date(startIso);
   const dateStr = start.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
