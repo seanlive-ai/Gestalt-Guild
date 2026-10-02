@@ -27,6 +27,7 @@ export default function Header() {
         </Link>
         <nav className="nav">
           <Link href="/">Lobbies</Link>
+          <Link href="/lobbies/history">History</Link>
           <Link href="/give">Give</Link>
           {session && <Link href="/house">House</Link>}
           {session && <Link href="/lobbies/new">Host</Link>}

@@ -22,6 +22,7 @@ export default function LobbyPage({ params }) {
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState(null);
   const [tab, setTab] = useState('seats');
+  const [archiving, setArchiving] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -42,12 +43,32 @@ export default function LobbyPage({ params }) {
   if (!lobby) return <div className="wrap"><p>Lobby not found.</p></div>;
 
   const isHost = currentUserId && currentUserId === lobby.host_id;
+  const isCompleted = lobby.status === 'completed';
+
+  async function handleArchive() {
+    setArchiving(true);
+    const { error } = await supabase
+      .from('lobbies')
+      .update({ status: 'archived' })
+      .eq('id', lobbyId);
+    setArchiving(false);
+    if (!error) {
+      setLobby({ ...lobby, status: 'archived' });
+    }
+  }
 
   return (
     <div className="wrap">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 10 }}>
         <h1>{lobby.title}</h1>
-        <span className={`status-pill status-${lobby.status}`}>{lobby.status.replace('_', ' ')}</span>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <span className={`status-pill status-${lobby.status}`}>{lobby.status.replace('_', ' ')}</span>
+          {isHost && isCompleted && !['archived'].includes(lobby.status) && (
+            <button className="btn btn-sm btn-outline" onClick={handleArchive} disabled={archiving}>
+              {archiving ? 'Archiving…' : 'Archive'}
+            </button>
+          )}
+        </div>
       </div>
       <p className="muted">
         {formatWhen(lobby.datetime_start, lobby.datetime_end)}
