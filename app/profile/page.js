@@ -26,6 +26,7 @@ export default function ProfilePage() {
 
   useEffect(() => {
     (async () => {
+      if (!supabase) { setLoading(false); return; }
       const { data: userData } = await supabase.auth.getUser();
       const uid = userData.user?.id || null;
       setUserId(uid);
