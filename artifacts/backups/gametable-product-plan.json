@@ -1,0 +1,93 @@
+{
+  "id": "HmiTMqh2gdTGNkEBHXgPbc",
+  "title": "GameTable Product Plan",
+  "subtitle": "Rev 0.3",
+  "description": "Product plan for GameTable, a booking platform for hourly table rentals focused on tabletop gaming",
+  "type": "product-documentation",
+  "created": "2026-09-22T00:00:00Z",
+  "lastModified": "2026-09-22T00:00:00Z",
+  "url": "https://claude.ai/artifact/HmiTMqh2gdTGNkEBHXgPbc",
+  "backupDate": "2026-09-22T00:00:00Z",
+  "tags": ["product-plan", "gaming", "marketplace", "saas", "event-coordination"],
+  "metadata": {
+    "status": "Active Development",
+    "phase": 1,
+    "launchTarget": "2026-09-17",
+    "businessModel": ["Whole Table Rentals", "Open Seating Model"],
+    "takeRate": "â‰¤15% (Phase 2)",
+    "teamSize": 6,
+    "businessModelTypes": [
+      "Mode A: Whole table (groups + host)",
+      "Mode B: Open seating ($15-40 per seat)"
+    ]
+  },
+  "phases": {
+    "phase1": {
+      "target": "September 17, 2026",
+      "focus": "Marathon gaming weekend (Sept 18-20) coordination",
+      "features": [
+        "Multi-day event page with RSVP",
+        "Schedule board (games Ã— time blocks)",
+        "Potluck coordinator",
+        "In-app messaging (Supabase Realtime)",
+        "Game cards with rules and teaching time",
+        "Logistics panel (parking, access, house rules)"
+      ],
+      "outOfScope": [
+        "Payment processing",
+        "Seating algorithms",
+        "Public-facing pages",
+        "Multi-table scheduling",
+        "Recurring bookings"
+      ]
+    },
+    "phase2": {
+      "timeframe": "~6 months post-launch",
+      "focus": "Paid bookings and monetization",
+      "features": [
+        "Stripe integration",
+        "Insurance partnerships",
+        "Membership models",
+        "Host assistance services",
+        "Advanced seating algorithms",
+        "Skill/experience matching"
+      ]
+    },
+    "phase3": {
+      "focus": "Venue expansion",
+      "features": [
+        "Game shop partnerships",
+        "Convention bookings",
+        "Tournament hosting",
+        "Multi-location support"
+      ]
+    }
+  },
+  "guardrails": [
+    "Childcare licensing prohibits casual childcare positioning",
+    "Overnight stays trigger short-term rental regulations",
+    "Platform coordinates food but never handles money for food/alcohol",
+    "Both business models must be tested before commitment"
+  ],
+  "techStack": {
+    "frontend": "Next.js (React)",
+    "backend": "Supabase (PostgreSQL + Realtime)",
+    "hosting": "Vercel",
+    "payments": "Stripe (Phase 2+)",
+    "analytics": "Vercel Analytics"
+  },
+  "openQuestions": [
+    "Add-on pricing structure (teaching services, premium games)",
+    "Overnight accommodations arrangement for Sept 18-20 event",
+    "Product naming confirmation",
+    "User registration method (email, social, magic links)"
+  ],
+  "successMetrics": [
+    "6-person team coordination for weekend event",
+    "100% RSVP submission rate",
+    "Zero confusion on logistics/timing",
+    "Potluck fully coordinated",
+    "Games taught within time estimates",
+    "Phase 2 feedback collected"
+  ]
+}

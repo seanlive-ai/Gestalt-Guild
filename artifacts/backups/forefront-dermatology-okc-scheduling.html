@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forefront Dermatology â€” OKC Scheduling</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      line-height: 1.6;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+      color: #333;
+    }
+    .header {
+      background: linear-gradient(135deg, #0e3f3b 0%, #1c7a71 100%);
+      color: white;
+      padding: 40px 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .header h1 { margin: 0; font-size: 32px; }
+    .header p { margin: 8px 0 0; opacity: 0.9; }
+    .metadata {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .metadata-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 15px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    .metadata-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    .metadata-label {
+      font-weight: 600;
+      color: #0e3f3b;
+    }
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .section h2 {
+      color: #0e3f3b;
+      border-bottom: 2px solid #1c7a71;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+    .section h3 {
+      color: #1c7a71;
+      margin-top: 15px;
+    }
+    .feature-list {
+      list-style: none;
+      padding: 0;
+    }
+    .feature-list li {
+      padding: 8px 0 8px 25px;
+      position: relative;
+    }
+    .feature-list li:before {
+      content: "âœ“";
+      position: absolute;
+      left: 0;
+      color: #2c9187;
+      font-weight: bold;
+    }
+    .tag {
+      display: inline-block;
+      background: #e8f4f2;
+      color: #0e3f3b;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #1c7a71;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-top: 15px;
+      transition: background 0.2s;
+    }
+    .cta-button:hover {
+      background: #0e3f3b;
+    }
+    .backup-info {
+      background: #f0f9f8;
+      border-left: 4px solid #2c9187;
+      padding: 15px;
+      border-radius: 4px;
+      font-size: 13px;
+      color: #555;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Forefront Dermatology</h1>
+    <p>North & South Clinics â€” Oklahoma City Â· Staff Scheduling System</p>
+  </div>
+
+  <div class="metadata">
+    <div class="metadata-row">
+      <span class="metadata-label">Type</span>
+      <span>Interactive Web Application</span>
+    </div>
+    <div class="metadata-row">
+      <span class="metadata-label">Purpose</span>
+      <span>Manage provider schedules, medical assistant assignments, and time off</span>
+    </div>
+    <div class="metadata-row">
+      <span class="metadata-label">Technology</span>
+      <span>Vanilla JavaScript Â· Claude Artifacts Database Â· Responsive CSS</span>
+    </div>
+    <div class="metadata-row">
+      <span class="metadata-label">Backup Date</span>
+      <span>September 22, 2026</span>
+    </div>
+    <div class="metadata-row">
+      <span class="metadata-label">Size</span>
+      <span>52.4 KB (959 lines)</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Key Features</h2>
+    <ul class="feature-list">
+      <li>Add and manage physicians, PAs, and Mohs surgeons</li>
+      <li>Self-service schedule configuration (hours, location, staffing needs)</li>
+      <li>Medical assistant pool with skills and preferences</li>
+      <li>Intelligent auto-assignment algorithm with skill matching</li>
+      <li>Weekly schedule templates for recurring patterns</li>
+      <li>Time off and leave tracking for all staff</li>
+      <li>Year-at-a-glance calendar view</li>
+      <li>Mobile-responsive design with dark mode support</li>
+      <li>Real-time data persistence with cloud sync option</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Tabs & Functionality</h2>
+
+    <h3>Providers Tab</h3>
+    <p>Manage the provider roster. Add/remove physicians, PAs, and Mohs surgeons. Each provider is assigned a unique color for easy identification across the application.</p>
+
+    <h3>My Schedule Tab</h3>
+    <p>Providers set their own weekly pattern independently. Each day can be split into AM and PM blocks, with configurable type (Clinic/Surgery), location, hours, staffing needs, and optional skill requirements.</p>
+
+    <h3>Medical Assistants Tab</h3>
+    <p>Maintain the MA pool. Configure skills, preferred provider/location, and weekly availability. Availability hours are hard constraintsâ€”MAs outside those hours won't be suggested.</p>
+
+    <h3>Weekly Schedule Tab</h3>
+    <p>Automatically generated MA suggestions with manual override. Color-coded by provider, flags under-staffed blocks, supports one-click assignment/removal.</p>
+
+    <h3>Year Calendar Tab</h3>
+    <p>Month-by-month overview with visual indicators for each provider's schedule and time off. Click any day to jump to that week's detailed schedule.</p>
+  </div>
+
+  <div class="section">
+    <h2>Smart Assignment Algorithm</h2>
+    <p>The system prioritizes blocks by difficulty (skill requirements first, then headcount), matches MAs to skills, respects availability constraints, and flags any gaps or conflicts.</p>
+    <p><strong>Key behaviors:</strong></p>
+    <ul class="feature-list">
+      <li>Fills skill minimum first (e.g., "2 surgery-trained MAs")</li>
+      <li>Prefers MAs with soft preferences (provider/location match)</li>
+      <li>Never double-books same MA in same block</li>
+      <li>Allows same MA to work AM and PM same day</li>
+      <li>Clear warnings for under-staffed blocks or unmet skill requirements</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Tags</h2>
+    <div>
+      <span class="tag">scheduling</span>
+      <span class="tag">dermatology</span>
+      <span class="tag">staff-management</span>
+      <span class="tag">medical</span>
+      <span class="tag">interactive</span>
+      <span class="tag">responsive</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Access Live Version</h2>
+    <p>This is a backup snapshot. To use or edit this application:</p>
+    <a href="https://claude.ai/artifact/JR9kCrqtmb1fJfDFswYP3n" class="cta-button">
+      Open Live Application
+    </a>
+
+    <div class="backup-info">
+      <strong>Backup Information:</strong><br>
+      This HTML file is a reference backup. The live, interactive version is hosted on Claude and syncs data in real-time. Use this backup for documentation, version control, and disaster recovery purposes. All three formats (Markdown, HTML, JSON) are automatically synced to GitHub whenever changes are detected.
+    </div>
+  </div>
+
+  <div class="section" style="background: #f9f9f9; border: 1px solid #e0e0e0;">
+    <p style="margin: 0; color: #999; font-size: 13px;">
+      Backup created: September 22, 2026 Â· Artifact ID: JR9kCrqtmb1fJfDFswYP3n Â·
+      <a href="https://claude.com/claude-code" style="color: #1c7a71; text-decoration: none;">Generated with Claude Code</a>
+    </p>
+  </div>
+</body>
+</html>
