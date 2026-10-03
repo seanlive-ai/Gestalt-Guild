@@ -48,8 +48,12 @@ export default function LobbyHistoryPage() {
       )}
 
       {lobbies.map((lobby) => {
-        const statusLabel = lobby.status === 'cancelled' ? 'Cancelled' :
-                           lobby.status === 'completed' ? 'Completed' : 'Archived';
+        const statusLabels = {
+          'archived': 'Archived',
+          'completed': 'Completed',
+          'cancelled': 'Cancelled'
+        };
+        const statusLabel = statusLabels[lobby.status] || lobby.status.replace('_', ' ');
         return (
           <Link key={lobby.id} href={`/lobbies/${lobby.id}`} className="lobby-card">
             <div className="lobby-card-top">

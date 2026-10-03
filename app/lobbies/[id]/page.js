@@ -49,13 +49,14 @@ export default function LobbyPage({ params }) {
 
   async function handleArchive() {
     setArchiving(true);
+    const newStatus = lobby.status === 'archived' ? 'completed' : 'archived';
     const { error } = await supabase
       .from('lobbies')
-      .update({ status: 'archived' })
+      .update({ status: newStatus })
       .eq('id', lobbyId);
     setArchiving(false);
     if (!error) {
-      setLobby({ ...lobby, status: 'archived' });
+      setLobby({ ...lobby, status: newStatus });
     }
   }
 
@@ -65,9 +66,9 @@ export default function LobbyPage({ params }) {
         <h1>{lobby.title}</h1>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <span className={`status-pill status-${lobby.status}`}>{lobby.status.replace('_', ' ')}</span>
-          {isHost && isCompleted && !['archived'].includes(lobby.status) && (
+          {isHost && (isCompleted || lobby.status === 'archived') && (
             <button className="btn btn-sm btn-outline" onClick={handleArchive} disabled={archiving}>
-              {archiving ? 'Archiving…' : 'Archive'}
+              {archiving ? (lobby.status === 'archived' ? 'Unarchiving…' : 'Archiving…') : (lobby.status === 'archived' ? 'Unarchive' : 'Archive')}
             </button>
           )}
         </div>
