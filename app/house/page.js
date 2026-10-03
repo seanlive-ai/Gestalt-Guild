@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { supabase } from '../../lib/supabaseClient';
 
 function getDaysInMonth(date) {
@@ -27,6 +28,23 @@ export default function HousePage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      if (userData.user) {
+        setUserId(userData.user.id);
+        const { data: member } = await supabase
+          .from('members')
+          .select('is_admin')
+          .eq('id', userData.user.id)
+          .single();
+        setIsAdmin(member?.is_admin || false);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     loadEvents();
@@ -116,7 +134,17 @@ export default function HousePage() {
     <div className="wrap">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
         <h1>Community House</h1>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          {userId && (
+            <Link href="/house/request" className="btn btn-sm btn-brass">
+              📋 Request booking
+            </Link>
+          )}
+          {isAdmin && (
+            <Link href="/admin/requests" className="btn btn-sm btn-primary">
+              👑 Pending requests
+            </Link>
+          )}
           <button className={`btn btn-sm ${view === 'month' ? 'btn-primary' : 'btn-outline'}`} onClick={() => setView('month')}>Month</button>
           <button className={`btn btn-sm ${view === 'week' ? 'btn-primary' : 'btn-outline'}`} onClick={() => setView('week')}>Week</button>
         </div>
