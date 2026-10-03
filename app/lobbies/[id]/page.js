@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { supabase } from '../../../lib/supabaseClient';
 import SeatTable from './SeatTable';
 import Messages from './Messages';
@@ -64,12 +65,17 @@ export default function LobbyPage({ params }) {
     <div className="wrap">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 10 }}>
         <h1>{lobby.title}</h1>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
           <span className={`status-pill status-${lobby.status}`}>{lobby.status.replace('_', ' ')}</span>
-          {isHost && (isCompleted || lobby.status === 'archived') && (
-            <button className="btn btn-sm btn-outline" onClick={handleArchive} disabled={archiving}>
-              {archiving ? (lobby.status === 'archived' ? 'Unarchiving…' : 'Archiving…') : (lobby.status === 'archived' ? 'Unarchive' : 'Archive')}
-            </button>
+          {isHost && (
+            <>
+              <Link href={`/lobbies/${lobbyId}/edit`} className="btn btn-sm btn-outline">Edit</Link>
+              {(isCompleted || lobby.status === 'archived') && (
+                <button className="btn btn-sm btn-outline" onClick={handleArchive} disabled={archiving}>
+                  {archiving ? (lobby.status === 'archived' ? 'Unarchiving…' : 'Archiving…') : (lobby.status === 'archived' ? 'Unarchive' : 'Archive')}
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
