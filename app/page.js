@@ -24,6 +24,7 @@ export default function HomePage() {
 
   async function load() {
     setLoading(true);
+    if (!supabase) { setLoading(false); return; }
     const { data: lobbyRows } = await supabase
       .from('lobbies')
       .select('id, title, datetime_start, location, games, max_seats, status, chapters(name)')

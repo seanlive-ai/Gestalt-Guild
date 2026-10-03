@@ -8,6 +8,7 @@ export default function Header() {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
+    if (!supabase) return;
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
     const { data: sub } = supabase.auth.onAuthStateChange((_event, sess) => {
       setSession(sess);
