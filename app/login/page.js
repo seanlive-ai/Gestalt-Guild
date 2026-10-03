@@ -14,17 +14,24 @@ export default function LoginPage() {
     e.preventDefault();
     setStatus('sending');
     setError(null);
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
-      },
-    });
-    if (error) {
-      setError(error.message);
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          emailRedirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
+        },
+      });
+      if (error) {
+        console.error('Login error:', error);
+        setError(error.message);
+        setStatus('idle');
+      } else {
+        setStatus('sent');
+      }
+    } catch (err) {
+      console.error('Login exception:', err);
+      setError(err.message || 'Failed to send magic link');
       setStatus('idle');
-    } else {
-      setStatus('sent');
     }
   }
 
