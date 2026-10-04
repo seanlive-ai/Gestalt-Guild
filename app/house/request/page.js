@@ -19,6 +19,7 @@ export default function RequestHousePage() {
   const [endDate, setEndDate] = useState('');
   const [endTime, setEndTime] = useState('18:00');
   const [purpose, setPurpose] = useState('other');
+  const [notes, setNotes] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -44,6 +45,7 @@ export default function RequestHousePage() {
       start_time: new Date(`${startDate}T${startTime}`).toISOString(),
       end_time: new Date(`${endDate}T${endTime}`).toISOString(),
       purpose: purpose || 'other',
+      notes: notes || null,
       status: 'pending',
     });
 
@@ -130,6 +132,17 @@ export default function RequestHousePage() {
               <option value="private_event">Private event</option>
               <option value="other">Other</option>
             </select>
+          </div>
+
+          <div className="field">
+            <label htmlFor="notes">Additional details (optional)</label>
+            <textarea
+              id="notes"
+              rows={3}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="E.g., expected number of guests, special requirements, etc."
+            />
           </div>
 
           {error && <p className="error-text">{error}</p>}

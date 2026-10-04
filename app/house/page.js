@@ -58,12 +58,10 @@ export default function HousePage() {
     const [lobbies, reservations] = await Promise.all([
       supabase
         .from('lobbies')
-        .select('id, title, datetime_start, datetime_end, at_community_house')
-        .eq('at_community_house', true)
+        .select('id, title, datetime_start, datetime_end, status')
         .gte('datetime_start', now.toISOString())
         .lte('datetime_start', sixMonthsFromNow.toISOString())
-        .eq('status', 'open')
-        .or('status.eq.full,status.eq.in_progress,status.eq.completed'),
+        .in('status', ['open', 'full', 'in_progress', 'completed']),
 
       supabase
         .from('space_reservations')
