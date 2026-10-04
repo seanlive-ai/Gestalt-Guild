@@ -123,11 +123,11 @@ export default function HousePage() {
 
   function getEventsForWeek(startDate) {
     const weekStart = new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()));
-    const weekEnd = new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 6));
+    const weekEnd = new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + 7));
     return events.filter(e => {
       const eStart = new Date(e.startDate);
       const eEnd = e.endDate ? new Date(e.endDate) : null;
-      return eStart <= weekEnd && (eEnd ? eEnd >= weekStart : eStart <= weekEnd);
+      return eStart < weekEnd && (eEnd ? eEnd >= weekStart : eStart < weekEnd);
     }).sort((a, b) => {
       const aStart = new Date(a.startDate);
       const bStart = new Date(b.startDate);
