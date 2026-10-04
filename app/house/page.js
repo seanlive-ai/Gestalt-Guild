@@ -138,9 +138,9 @@ export default function HousePage() {
 
   return (
     <div className="wrap">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <h1>Community House</h1>
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 12, minWidth: 0 }}>
+        <h1 style={{ margin: 0, fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>Community House</h1>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           {userId && (
             <Link href="/house/request" className="btn btn-sm btn-brass">
               📋 Request booking
@@ -208,7 +208,7 @@ export default function HousePage() {
                             }}
                             title={event.title}
                           >
-                            {event.type === 'lobby' ? '🎮' : '🏠'} {event.title}
+                            {event.type === 'lobby' ? '🎲' : '🏠'} {event.title}
                           </div>
                         ))}
                       </div>
@@ -245,7 +245,7 @@ export default function HousePage() {
                       minWidth: 50,
                       textAlign: 'center',
                     }}>
-                      {event.type === 'lobby' ? '🎮' : '🏠'}
+                      {event.type === 'lobby' ? '🎲' : '🏠'}
                     </div>
                     <div style={{ flex: 1 }}>
                       <h3 style={{ margin: '0 0 4px 0' }}>{event.title}</h3>
