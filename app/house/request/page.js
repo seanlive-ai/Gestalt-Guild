@@ -15,8 +15,10 @@ export default function RequestHousePage() {
   const [submitted, setSubmitted] = useState(false);
 
   const [startDate, setStartDate] = useState('');
+  const [startTime, setStartTime] = useState('10:00');
   const [endDate, setEndDate] = useState('');
-  const [purpose, setPurpose] = useState('');
+  const [endTime, setEndTime] = useState('18:00');
+  const [purpose, setPurpose] = useState('other');
 
   useEffect(() => {
     (async () => {
@@ -39,9 +41,10 @@ export default function RequestHousePage() {
 
     const { error: err } = await supabase.from('space_reservations').insert({
       requested_by: userId,
-      start_date: new Date(startDate).toISOString(),
-      end_date: new Date(endDate).toISOString(),
-      approved: false,
+      start_time: new Date(`${startDate}T${startTime}`).toISOString(),
+      end_time: new Date(`${endDate}T${endTime}`).toISOString(),
+      purpose: purpose || 'other',
+      status: 'pending',
     });
 
     setSubmitting(false);
@@ -79,6 +82,19 @@ export default function RequestHousePage() {
               />
             </div>
             <div className="field">
+              <label htmlFor="startTime">Start time</label>
+              <input
+                id="startTime"
+                type="time"
+                required
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="field">
               <label htmlFor="endDate">End date</label>
               <input
                 id="endDate"
@@ -89,17 +105,31 @@ export default function RequestHousePage() {
                 min={startDate || new Date().toISOString().split('T')[0]}
               />
             </div>
+            <div className="field">
+              <label htmlFor="endTime">End time</label>
+              <input
+                id="endTime"
+                type="time"
+                required
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="field">
-            <label htmlFor="purpose">Purpose (optional)</label>
-            <textarea
+            <label htmlFor="purpose">Purpose</label>
+            <select
               id="purpose"
-              rows={3}
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
-              placeholder="E.g., Private game night, Board game tournament, etc."
-            />
+            >
+              <option value="game_night">Game night</option>
+              <option value="coworking">Coworking</option>
+              <option value="hangout">Hangout</option>
+              <option value="private_event">Private event</option>
+              <option value="other">Other</option>
+            </select>
           </div>
 
           {error && <p className="error-text">{error}</p>}

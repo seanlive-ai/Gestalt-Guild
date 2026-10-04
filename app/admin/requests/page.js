@@ -49,8 +49,8 @@ export default function AdminRequestsPage() {
   async function loadRequests() {
     const { data: pendingRequests } = await supabase
       .from('space_reservations')
-      .select('id, requested_by, start_date, end_date, approved, created_at')
-      .eq('approved', false)
+      .select('id, requested_by, start_time, end_time, status, created_at')
+      .eq('status', 'pending')
       .order('created_at', { ascending: false });
 
     setRequests(pendingRequests || []);
@@ -76,7 +76,7 @@ export default function AdminRequestsPage() {
     setApproving(prev => ({ ...prev, [requestId]: 'approving' }));
     const { error } = await supabase
       .from('space_reservations')
-      .update({ approved: true })
+      .update({ status: 'approved' })
       .eq('id', requestId);
 
     if (!error) {
@@ -89,7 +89,7 @@ export default function AdminRequestsPage() {
     setApproving(prev => ({ ...prev, [requestId]: 'denying' }));
     const { error } = await supabase
       .from('space_reservations')
-      .delete()
+      .update({ status: 'declined' })
       .eq('id', requestId);
 
     if (!error) {
@@ -119,7 +119,7 @@ export default function AdminRequestsPage() {
                     {memberNames[request.requested_by] || 'Unknown member'}
                   </h3>
                   <p className="muted" style={{ margin: '0 0 8px 0' }}>
-                    {formatDate(request.start_date)} – {formatDate(request.end_date)}
+                    {formatDate(request.start_time)} – {formatDate(request.end_time)}
                   </p>
                   <p className="muted" style={{ margin: 0, fontSize: '0.85rem' }}>
                     Requested {new Date(request.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}

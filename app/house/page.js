@@ -67,10 +67,10 @@ export default function HousePage() {
 
       supabase
         .from('space_reservations')
-        .select('id, start_date, end_date, approved')
-        .eq('approved', true)
-        .gte('start_date', now.toISOString())
-        .lte('start_date', sixMonthsFromNow.toISOString()),
+        .select('id, start_time, end_time, status')
+        .eq('status', 'approved')
+        .gte('start_time', now.toISOString())
+        .lte('start_time', sixMonthsFromNow.toISOString()),
     ]);
 
     const eventList = [];
@@ -95,10 +95,10 @@ export default function HousePage() {
           id: `res-${res.id}`,
           type: 'reservation',
           title: 'House Reserved',
-          startDate: new Date(res.start_date),
-          endDate: new Date(res.end_date),
-          startIso: res.start_date,
-          endIso: res.end_date,
+          startDate: new Date(res.start_time),
+          endDate: new Date(res.end_time),
+          startIso: res.start_time,
+          endIso: res.end_time,
         });
       });
     }
