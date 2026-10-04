@@ -114,8 +114,10 @@ export default function HousePage() {
 
   function getEventsForDate(date) {
     return events.filter(e => {
-      const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-      return e.startDate <= d && (e.endDate ? e.endDate >= d : e.startDate.toDateString() === d.toDateString());
+      const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const eStart = new Date(e.startDate);
+      const eEnd = e.endDate ? new Date(e.endDate) : null;
+      return eStart.getTime() <= d.getTime() + 86400000 && (eEnd ? eEnd.getTime() >= d.getTime() : eStart.toDateString() === date.toDateString());
     });
   }
 
@@ -123,8 +125,14 @@ export default function HousePage() {
     const weekEnd = new Date(startDate);
     weekEnd.setDate(weekEnd.getDate() + 6);
     return events.filter(e => {
-      return e.startDate <= weekEnd && (e.endDate ? e.endDate >= startDate : e.startDate <= weekEnd);
-    }).sort((a, b) => a.startDate - b.startDate);
+      const eStart = new Date(e.startDate);
+      const eEnd = e.endDate ? new Date(e.endDate) : null;
+      return eStart <= weekEnd && (eEnd ? eEnd >= startDate : eStart <= weekEnd);
+    }).sort((a, b) => {
+      const aStart = new Date(a.startDate);
+      const bStart = new Date(b.startDate);
+      return aStart - bStart;
+    });
   }
 
   const monthDays = getDaysInMonth(currentDate);
