@@ -73,8 +73,13 @@ export default function HousePage() {
 
     const eventList = [];
 
+    console.log('Lobbies response:', lobbies);
+    console.log('Reservations response:', reservations);
+
     if (lobbies.data) {
+      console.log('Found', lobbies.data.length, 'lobbies');
       lobbies.data.forEach(lobby => {
+        console.log('Adding lobby:', lobby.title, 'Status:', lobby.status, 'Date:', lobby.datetime_start);
         eventList.push({
           id: lobby.id,
           type: 'lobby',
@@ -88,6 +93,7 @@ export default function HousePage() {
     }
 
     if (reservations.data) {
+      console.log('Found', reservations.data.length, 'reservations');
       reservations.data.forEach((res, idx) => {
         eventList.push({
           id: `res-${res.id}`,
@@ -101,6 +107,7 @@ export default function HousePage() {
       });
     }
 
+    console.log('Total events loaded:', eventList.length);
     setEvents(eventList);
     setLoading(false);
   }
