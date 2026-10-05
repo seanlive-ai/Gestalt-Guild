@@ -1,0 +1,3 @@
+git add -A
+git commit -m "Disable SSR for host form to prevent prerender errors"
+git push origin main
