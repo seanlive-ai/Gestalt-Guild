@@ -3,21 +3,22 @@
 export const dynamic = 'force-dynamic';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '../../../lib/supabaseClient';
 
 export default function NewLobbyPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [userId, setUserId] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [chapterId, setChapterId] = useState(null);
 
   const [title, setTitle] = useState('');
   const [gamesText, setGamesText] = useState('');
-  const [dateStart, setDateStart] = useState('');
-  const [timeStart, setTimeStart] = useState('');
-  const [dateEnd, setDateEnd] = useState('');
-  const [timeEnd, setTimeEnd] = useState('');
+  const [dateStart, setDateStart] = useState(() => searchParams.get('dateStart') || '');
+  const [timeStart, setTimeStart] = useState(() => searchParams.get('timeStart') || '');
+  const [dateEnd, setDateEnd] = useState(() => searchParams.get('dateEnd') || '');
+  const [timeEnd, setTimeEnd] = useState(() => searchParams.get('timeEnd') || '');
   const [location, setLocation] = useState('');
   const [address, setAddress] = useState('');
   const [maxSeats, setMaxSeats] = useState(4);

@@ -33,6 +33,8 @@ export default function MyBookingsPage() {
   const [userId, setUserId] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [canceling, setCanceling] = useState({});
+  const [creatingLobby, setCreatingLobby] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -53,6 +55,29 @@ export default function MyBookingsPage() {
       setLoading(false);
     })();
   }, [router]);
+
+  async function handleCancelBooking(bookingId) {
+    setCanceling(prev => ({ ...prev, [bookingId]: true }));
+    const { error } = await supabase
+      .from('space_reservations')
+      .update({ status: 'cancelled' })
+      .eq('id', bookingId);
+
+    if (!error) {
+      setBookings(bookings.filter(b => b.id !== bookingId));
+    }
+    setCanceling(prev => ({ ...prev, [bookingId]: false }));
+  }
+
+  function handleCreateLobby(booking) {
+    const params = new URLSearchParams({
+      dateStart: new Date(booking.start_time).toISOString().split('T')[0],
+      timeStart: new Date(booking.start_time).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+      dateEnd: new Date(booking.end_time).toISOString().split('T')[0],
+      timeEnd: new Date(booking.end_time).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }),
+    });
+    router.push(`/lobbies/new?${params}`);
+  }
 
   if (loading) return <div className="wrap"><p className="muted">Loading bookings…</p></div>;
 
@@ -101,17 +126,31 @@ export default function MyBookingsPage() {
 
               {booking.status === 'approved' && (
                 <div style={{ paddingTop: 10, borderTop: '1px solid var(--parchment-dark)' }}>
-                  <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem', color: 'var(--brass)' }}>
+                  <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem', color: 'var(--brass)', marginBottom: 12 }}>
                     ✓ Your booking has been approved! The house will be available for your event.
                   </p>
+                  <button
+                    onClick={() => handleCreateLobby(booking)}
+                    className="btn btn-sm btn-primary"
+                    disabled={creatingLobby === booking.id}
+                  >
+                    {creatingLobby === booking.id ? 'Creating…' : '🎲 Create Lobby from this booking'}
+                  </button>
                 </div>
               )}
 
               {booking.status === 'pending' && (
                 <div style={{ paddingTop: 10, borderTop: '1px solid var(--parchment-dark)' }}>
-                  <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem', color: 'var(--brass)' }}>
+                  <p style={{ margin: '8px 0 0 0', fontSize: '0.85rem', color: 'var(--brass)', marginBottom: 12 }}>
                     ⏳ Waiting for admin approval. You'll see the booking on the calendar once approved.
                   </p>
+                  <button
+                    onClick={() => handleCancelBooking(booking.id)}
+                    className="btn btn-sm btn-outline"
+                    disabled={canceling[booking.id]}
+                  >
+                    {canceling[booking.id] ? 'Canceling…' : '✕ Cancel booking'}
+                  </button>
                 </div>
               )}
 
