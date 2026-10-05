@@ -1,0 +1,3 @@
+git add -A
+git commit -m "Simplify Host form back to single client component"
+git push origin main
