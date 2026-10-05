@@ -85,8 +85,28 @@ export default function LobbyPage({ params }) {
         {lobby.chapters?.name ? ` · ${lobby.chapters.name}` : ''}
       </p>
       <p className="muted">Hosted by {isHost ? 'you' : (lobby.members?.display_name || 'a guild member')}</p>
-      {lobby.address && (isHost || true) && (
-        <p className="muted">Address: {lobby.address}</p>
+      {lobby.address && (
+        <div style={{ marginTop: 8 }}>
+          <p className="muted" style={{ marginBottom: 8 }}>📍 {lobby.address}</p>
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(lobby.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-sm btn-outline"
+            >
+              🗺️ Google Maps
+            </a>
+            <a
+              href={`https://maps.apple.com/?q=${encodeURIComponent(lobby.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-sm btn-outline"
+            >
+              🗺️ Apple Maps
+            </a>
+          </div>
+        </div>
       )}
       <div style={{ marginTop: 6 }}>
         {(lobby.games || []).map((g) => <span key={g} className="tag">{g}</span>)}
