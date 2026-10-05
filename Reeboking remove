@@ -1,0 +1,3 @@
+git add -A
+git commit -m "Separate useSearchParams into client component to fix build error"
+git push origin main
