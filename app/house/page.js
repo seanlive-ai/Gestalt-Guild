@@ -108,9 +108,10 @@ export default function HousePage() {
   function getEventsForDate(date) {
     return events.filter(e => {
       const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const nextDay = new Date(d.getTime() + 86400000);
       const eStart = new Date(e.startDate);
-      const eEnd = e.endDate ? new Date(e.endDate) : null;
-      return eStart.getTime() <= d.getTime() + 86400000 && (eEnd ? eEnd.getTime() >= d.getTime() : eStart.toDateString() === date.toDateString());
+      const eEnd = e.endDate ? new Date(e.endDate) : eStart;
+      return eStart < nextDay && eEnd >= d;
     });
   }
 
@@ -193,8 +194,9 @@ export default function HousePage() {
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
                         {dayEvents.map(event => (
-                          <div
+                          <Link
                             key={event.id}
+                            href={event.type === 'lobby' ? `/lobbies/${event.id}` : '#'}
                             style={{
                               padding: 4,
                               borderRadius: 3,
@@ -205,11 +207,14 @@ export default function HousePage() {
                               whiteSpace: 'nowrap',
                               fontSize: '0.75rem',
                               fontWeight: 'bold',
+                              display: 'block',
+                              textDecoration: 'none',
+                              cursor: event.type === 'lobby' ? 'pointer' : 'default',
                             }}
                             title={event.title}
                           >
                             {event.type === 'lobby' ? '🎲' : '🏠'} {event.title}
-                          </div>
+                          </Link>
                         ))}
                       </div>
                     </>
@@ -234,21 +239,22 @@ export default function HousePage() {
               <p className="muted">No bookings this week.</p>
             ) : (
               weekEvents.map(event => (
-                <div key={event.id} className="card">
-                  <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                    <div style={{
-                      padding: 12,
-                      borderRadius: 4,
-                      backgroundColor: event.type === 'lobby' ? 'var(--brass)' : '#e8d5b7',
-                      color: 'white',
-                      fontSize: '1.5rem',
-                      minWidth: 50,
-                      textAlign: 'center',
-                    }}>
-                      {event.type === 'lobby' ? '🎲' : '🏠'}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <h3 style={{ margin: '0 0 4px 0' }}>{event.title}</h3>
+                <Link key={event.id} href={event.type === 'lobby' ? `/lobbies/${event.id}` : '#'} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <div className="card" style={{ cursor: event.type === 'lobby' ? 'pointer' : 'default' }}>
+                    <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                      <div style={{
+                        padding: 12,
+                        borderRadius: 4,
+                        backgroundColor: event.type === 'lobby' ? 'var(--brass)' : '#e8d5b7',
+                        color: 'white',
+                        fontSize: '1.5rem',
+                        minWidth: 50,
+                        textAlign: 'center',
+                      }}>
+                        {event.type === 'lobby' ? '🎲' : '🏠'}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <h3 style={{ margin: '0 0 4px 0' }}>{event.title}</h3>
                       <p className="muted" style={{ margin: 0 }}>
                         {event.startDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} {formatTime(event.startIso)}
                         {event.endDate && event.endDate.toDateString() !== event.startDate.toDateString() && (
@@ -264,6 +270,7 @@ export default function HousePage() {
                     </div>
                   </div>
                 </div>
+                </Link>
               ))
             )}
           </div>
