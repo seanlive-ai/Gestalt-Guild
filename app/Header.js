@@ -31,6 +31,7 @@ export default function Header() {
           <Link href="/lobbies/history">History</Link>
           <Link href="/give">Give</Link>
           {session && <Link href="/house">House</Link>}
+          {session && <Link href="/house/my-bookings">Bookings</Link>}
           {session && <Link href="/lobbies/new">Host</Link>}
           {session && <Link href="/profile">Profile</Link>}
           {session ? (
