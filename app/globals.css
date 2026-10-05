@@ -493,3 +493,22 @@ button {
   margin-right: 5px;
   vertical-align: middle;
 }
+
+@media (max-width: 640px) {
+  .site-header-inner {
+    padding: 10px 12px;
+    gap: 12px;
+  }
+  .brand {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .nav {
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav a, .nav button.linklike {
+    font-size: 0.8rem;
+  }
+}
