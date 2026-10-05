@@ -1,0 +1,3 @@
+git add -A
+git commit -m "Remove useSearchParams - no longer needed after removing booking pages"
+git push origin main
